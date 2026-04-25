@@ -30,7 +30,9 @@ def _load_jobs_index() -> set[str]:
 def _validate_picks(jobs_idx: set[str]) -> tuple[int, list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
-    pick_files = sorted(p for p in GT_DIR.glob("*.json") if p.name != "profiles_handlabeled.json")
+    pick_files = sorted(
+        p for p in GT_DIR.glob("*.json") if p.name != "profiles_handlabeled.json"
+    )
     if not pick_files:
         errors.append(f"No ground-truth pick files found in {GT_DIR}")
         return 0, errors, warnings

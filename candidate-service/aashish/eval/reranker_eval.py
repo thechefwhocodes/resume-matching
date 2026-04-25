@@ -177,7 +177,9 @@ def run_reranker_eval(
             llm=llm,
             tracker=tracker,
         )
-        ranked = sorted(primary.items(), key=lambda kv: kv[1]["fit_score"], reverse=True)
+        ranked = sorted(
+            primary.items(), key=lambda kv: kv[1]["fit_score"], reverse=True
+        )
         ranked_ids = [jid for jid, _ in ranked]
 
         ndcgs.append(ndcg_at_k(ranked_ids, pick.expected_job_ids, 10))
@@ -187,7 +189,9 @@ def run_reranker_eval(
         judge: dict[str, dict] | None = None
         if llm.settings.extract_model != llm.settings.rerank_model:
             judge = _cached_or_call(
-                cache_key=_cache_key(resume=text, ids=ids, model=llm.settings.extract_model),
+                cache_key=_cache_key(
+                    resume=text, ids=ids, model=llm.settings.extract_model
+                ),
                 resume=text,
                 profile=profile,
                 candidates=candidates,
