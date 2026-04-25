@@ -131,7 +131,7 @@ make test
 ```
 
 Spins up an ephemeral pgvector-enabled Postgres via testcontainers per session,
-runs 39 tests (28 unit + 11 integration). No live OpenAI calls made in tests.
+runs 46 tests (38 unit + 8 integration). No live OpenAI calls made in tests.
 
 ## Eval
 

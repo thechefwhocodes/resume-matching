@@ -42,7 +42,6 @@ next-env.d.ts
 /candidate-service/implementation/
 /candidate-service/*/
 !candidate-service/README.md
-!candidate-service/api-contract.md
 !candidate-service/aashish/
 
 # Python (candidate-service/aashish)
@@ -51,7 +50,6 @@ __pycache__/
 *$py.class
 .venv/
 venv/
-.env
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

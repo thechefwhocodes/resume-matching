@@ -20,7 +20,7 @@ from sqlalchemy.orm import Session
 
 from src.config import ApproachName, get_settings
 from src.db.models import Job
-from src.db.queries import FilteredCandidate, get_job, retrieve_with_filters
+from src.db.queries import get_job, retrieve_with_filters
 from src.extractor.extractor import extract_resume_profile
 from src.extractor.prompts import ResumeProfile
 from src.llm.client import CostTracker, LLMClient
@@ -222,91 +222,6 @@ def _embed_pipeline(
         )
 
     return matches, len(pairs), len(top)
-
-
-# ---------------------------------------------------------------------------
-# Embed + filters pipeline (P1c)
-# ---------------------------------------------------------------------------
-
-
-def _embed_filters_pipeline(
-    request: MatchRequest,
-    *,
-    session: Session,
-    llm: LLMClient,
-    tracker: CostTracker,
-    bm25_index: Retriever | None,
-    retrieval_top_k: int,
-    result_top_k: int,
-) -> tuple[list[JobMatch], int, int]:
-    """Embed retrieve top-N -> extract profile -> hard SQL filters + soft scoring."""
-    if not llm.is_available:
-        log.warning("embed+filters requested without OPENAI_API_KEY; falling back to BM25")
-        return _bm25_pipeline(
-            request, session=session, bm25_index=bm25_index, top_k=result_top_k
-        )
-
-    profile = extract_resume_profile(
-        session,
-        content=request.resume.content,
-        llm=llm,
-        tracker=tracker,
-        filename=request.resume.filename,
-    )
-
-    retriever = EmbeddingRetriever(llm=llm, session=session, tracker=tracker)
-    pairs = retriever.retrieve(request.resume.content, top_k=retrieval_top_k)
-    if not pairs:
-        return [], 0, 0
-
-    survivors = retrieve_with_filters(
-        session,
-        candidate_pairs=pairs,
-        profile=profile,
-    )
-    if not survivors:
-        return [], len(pairs), 0
-
-    top = survivors[:result_top_k]
-    matches = [_filtered_to_jobmatch(c, profile) for c in top]
-    return matches, len(pairs), len(survivors)
-
-
-def _filtered_to_jobmatch(c: FilteredCandidate, profile: ResumeProfile) -> JobMatch:
-    sim_pct = max(0.0, min(1.0, (c.sim + 1.0) / 2.0)) * 100.0
-    final_pct = round(min(100.0, sim_pct + (c.final_score - c.sim) * 100.0), 2)
-
-    skills_overlap = sorted(
-        s for s in profile.skills if _job_text_mentions(c.job, s)
-    )[:8]
-
-    bits = [f"Dense semantic match (sim {c.sim:.3f})."]
-    if c.filter_flags.get("category") == "primary_category":
-        bits.append("Primary category aligned (+10).")
-    elif c.filter_flags.get("category") == "secondary_category":
-        bits.append("Secondary category aligned (+5).")
-    if c.filter_flags.get("yoe") == "yoe_aligned":
-        bits.append("YoE in range (+5).")
-    if c.filter_flags.get("location") == "exact_city":
-        bits.append("Same city (+5).")
-    elif c.filter_flags.get("location") == "remote_friendly":
-        bits.append("Remote-friendly + you're open to remote (+3).")
-    explanation = " ".join(bits)
-
-    yoe_alignment = (
-        f"Job wants {c.job.yoe_min or 0}+ yrs; candidate has "
-        f"{profile.years_experience:g}."
-    )
-
-    return _to_jobmatch(
-        c.job,
-        match_score=final_pct,
-        retrieval_score=float(c.sim),
-        explanation=explanation,
-        matching_skills=skills_overlap,
-        experience_alignment=yoe_alignment,
-        filter_flags=c.filter_flags,
-    )
 
 
 def _job_text_mentions(job: Job, term: str) -> bool:

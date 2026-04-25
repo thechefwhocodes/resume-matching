@@ -28,7 +28,7 @@ You have **300 job descriptions** and need to match them to uploaded resumes. De
 
 ```bash
 git clone <repo-url>
-cd onsite-AI-eng
+cd resume-matching
 npm install
 ```
 
@@ -182,7 +182,6 @@ resume-matching/
 │   └── types/index.ts             # Shared TS contract
 ├── candidate-service/
 │   ├── README.md
-│   ├── api-contract.md
 │   └── <your-name>/               # Your implementation lives here
 │       ├── README.md              # Setup, demo path, design overview
 │       ├── EVALUATION.md          # Metrics, risks, what you'd do next

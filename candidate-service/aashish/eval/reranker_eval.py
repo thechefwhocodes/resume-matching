@@ -65,6 +65,34 @@ def _cache_path(key: str) -> Path:
     return CACHE_DIR / f"rerank-{key}.json"
 
 
+def aggregate_rater_scores(
+    *,
+    ids: list[str],
+    primary: dict[str, dict],
+    judge: dict[str, dict] | None,
+) -> tuple[list[float], list[float]]:
+    """Build aligned score lists for calibration + cohen's kappa.
+
+    When `judge` is None (single-model mode) the primary list contains every
+    primary score and the judge list is empty.  When `judge` is provided we
+    only emit rows where BOTH raters scored the same id, guaranteeing
+    `len(primary_scores) == len(judge_scores)` so `cohens_kappa` does not hit
+    its alignment guard.
+    """
+    primary_scores: list[float] = []
+    judge_scores: list[float] = []
+    if judge is None:
+        primary_scores.extend(
+            primary[jid]["fit_score"] for jid in ids if jid in primary
+        )
+        return primary_scores, judge_scores
+    for jid in ids:
+        if jid in primary and jid in judge:
+            primary_scores.append(primary[jid]["fit_score"])
+            judge_scores.append(judge[jid]["fit_score"])
+    return primary_scores, judge_scores
+
+
 def _cached_or_call(
     *,
     cache_key: str,
@@ -155,8 +183,8 @@ def run_reranker_eval(
         ndcgs.append(ndcg_at_k(ranked_ids, pick.expected_job_ids, 10))
         mrrs.append(mrr(ranked_ids[:10], set(pick.expected_job_ids)))
         p5s.append(precision_at_k(ranked_ids, set(pick.expected_job_ids), 5))
-        all_scores_primary.extend(primary[jid]["fit_score"] for jid in ids if jid in primary)
 
+        judge: dict[str, dict] | None = None
         if llm.settings.extract_model != llm.settings.rerank_model:
             judge = _cached_or_call(
                 cache_key=_cache_key(resume=text, ids=ids, model=llm.settings.extract_model),
@@ -166,10 +194,11 @@ def run_reranker_eval(
                 llm=llm,
                 tracker=tracker,
             )
-            for jid in ids:
-                if jid in primary and jid in judge:
-                    all_scores_primary.append(primary[jid]["fit_score"])
-                    all_scores_judge.append(judge[jid]["fit_score"])
+        p_scores, j_scores = aggregate_rater_scores(
+            ids=ids, primary=primary, judge=judge
+        )
+        all_scores_primary.extend(p_scores)
+        all_scores_judge.extend(j_scores)
 
     report.n_queries = len(ndcgs)
     if ndcgs:
