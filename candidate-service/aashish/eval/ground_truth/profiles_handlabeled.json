@@ -1,0 +1,151 @@
+[
+  {
+    "resume_file": "experienced/senior-backend-engineer.txt",
+    "profile": {
+      "years_experience": 8.0,
+      "primary_category": "Backend",
+      "secondary_categories": ["DevOps"],
+      "seniority": "Senior",
+      "needs_h1b_sponsorship": false,
+      "open_to_remote": false,
+      "location_city": "Seattle, WA",
+      "skills": [
+        "go",
+        "python",
+        "java",
+        "postgres",
+        "redis",
+        "kafka",
+        "rabbitmq",
+        "kubernetes",
+        "docker",
+        "terraform",
+        "aws",
+        "grpc",
+        "graphql",
+        "datadog",
+        "prometheus"
+      ],
+      "summary": "Senior Backend / Distributed Systems engineer at Snowflake, 8 yrs, US-based, no sponsorship needed."
+    }
+  },
+  {
+    "resume_file": "experienced/ml-engineer-nlp.txt",
+    "profile": {
+      "years_experience": 4.0,
+      "primary_category": "ML/AI",
+      "secondary_categories": ["Backend"],
+      "seniority": "Mid",
+      "needs_h1b_sponsorship": false,
+      "open_to_remote": false,
+      "location_city": "New York, NY",
+      "skills": [
+        "python",
+        "pytorch",
+        "tensorflow",
+        "transformers",
+        "huggingface",
+        "bert",
+        "llama",
+        "rag",
+        "fine-tuning",
+        "embeddings",
+        "mlflow",
+        "sagemaker",
+        "fastapi",
+        "postgres",
+        "elasticsearch",
+        "aws"
+      ],
+      "summary": "Mid-level ML/NLP engineer at Bloomberg, 4 yrs, US-based, MS NYU."
+    }
+  },
+  {
+    "resume_file": "new-grads/cs-grad-good-internship.txt",
+    "profile": {
+      "years_experience": 0.5,
+      "primary_category": "Full-Stack",
+      "secondary_categories": ["ML/AI"],
+      "seniority": "Junior",
+      "needs_h1b_sponsorship": false,
+      "open_to_remote": false,
+      "location_city": "Palo Alto, CA",
+      "skills": [
+        "python",
+        "java",
+        "javascript",
+        "typescript",
+        "react",
+        "node.js",
+        "express",
+        "django",
+        "flask",
+        "tensorflow",
+        "pytorch",
+        "postgres",
+        "mongodb",
+        "redis",
+        "aws",
+        "docker"
+      ],
+      "summary": "Stanford CS new-grad with Airbnb internship + AI lab research, generalist."
+    }
+  },
+  {
+    "resume_file": "remote/india-backend-engineer.txt",
+    "profile": {
+      "years_experience": 5.0,
+      "primary_category": "Backend",
+      "secondary_categories": ["DevOps"],
+      "seniority": "Senior",
+      "needs_h1b_sponsorship": true,
+      "open_to_remote": true,
+      "location_city": "Bangalore, India",
+      "skills": [
+        "java",
+        "spring boot",
+        "python",
+        "go",
+        "postgres",
+        "mysql",
+        "mongodb",
+        "redis",
+        "cassandra",
+        "kafka",
+        "rabbitmq",
+        "kubernetes",
+        "docker",
+        "terraform",
+        "aws",
+        "grpc"
+      ],
+      "summary": "5-yr Senior Backend at Flipkart/Amazon India; needs H-1B sponsorship; open to US relocation or remote."
+    }
+  },
+  {
+    "resume_file": "less-impressive/job-hopper-with-gaps.txt",
+    "profile": {
+      "years_experience": 2.0,
+      "primary_category": "Frontend",
+      "secondary_categories": ["Full-Stack"],
+      "seniority": "Junior",
+      "needs_h1b_sponsorship": false,
+      "open_to_remote": true,
+      "location_city": "Phoenix, AZ",
+      "skills": [
+        "javascript",
+        "python",
+        "html",
+        "css",
+        "react",
+        "node.js",
+        "express",
+        "wordpress",
+        "mysql",
+        "mongodb",
+        "git"
+      ],
+      "summary": "Bootcamp grad, ~2 yrs cumulative, multiple short stints + gaps; junior frontend/web."
+    }
+  }
+]

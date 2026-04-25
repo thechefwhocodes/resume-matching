@@ -1,0 +1,5 @@
+{
+  "resume_file": "experienced/ml-engineer-nlp.txt",
+  "expected_job_ids": [],
+  "notes": "PLACEHOLDER. Generate via Claude Opus 4 using the prompt in eval/ground_truth/README.md, then replace the empty array with the top-5 picks. Validator will warn (not fail) until this is filled."
+}

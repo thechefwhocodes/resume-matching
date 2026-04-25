@@ -1,0 +1,21 @@
+[project]
+name = "resume-matching-aashish"
+version = "0.1.0"
+description = "Resume-to-job matching service: FastAPI + Postgres + pgvector + OpenAI"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+asyncio_mode = "auto"
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]
