@@ -125,6 +125,34 @@ sequenceDiagram
   Lifespan-->>Uvicorn: ready
 ```
 
+## Performance findings (Apr 25, 2026 measured run)
+
+Measured against the live `make demo` + UI flow with `OPENAI_API_KEY` set
+and the default `embed+rerank` approach. See
+[EVALUATION.md](EVALUATION.md#measured-results--apr-25-2026) for the full
+numbers.
+
+```mermaid
+flowchart LR
+  R["POST /match"] --> E["extract_resume_profile<br/>~3s (cache miss)<br/>~5ms (hit)"]
+  E --> EM["embed resume<br/>~0.5s"]
+  EM --> RT["pgvector + filters<br/>< 5ms"]
+  RT --> RR["LLM rerank<br/><b>~14-23s (dominant)</b>"]
+  RR --> RP[response]
+```
+
+| Stage | Measured (p95) | Original plan | Note |
+| --- | --- | --- | --- |
+| Embed resume | 0.4–0.6s | 0.2–0.5s | ✅ on plan |
+| Extract profile (miss) | 2.5–3.0s | 0.8–1.5s | ⚠️ 2× plan |
+| pgvector + filters | < 5ms | < 50ms | ✅ |
+| Rerank batched | 14–23s | 3–5s | 🔴 4× plan |
+| **Total (p95)** | **~21s** | **~5–7s** | inside 30s proxy ceiling, no headroom |
+
+The reranker dominates wall time. Two issues compound: (1) `gpt-4o-mini`
+is slow on long structured outputs, and (2) it silently truncates lists
+> 15 candidates (see EVALUATION.md F5 / R37).
+
 ## Decision log
 
 ### D1 — Postgres + pgvector vs FAISS / Chroma / in-memory
@@ -203,6 +231,35 @@ We spin up a real `pgvector/pgvector:0.8.0-pg16` container per test session
 so the cosine query path is exercised end-to-end. Slower than mocks
 (~5s session warm-up) but catches everything from JSON column quirks to
 pgvector operator issues.
+
+### D12 — `gpt-4o-mini` for rerank: cheap but truncates
+
+We picked `gpt-4o-mini` for both extract and rerank because it's ~10× cheaper
+than `gpt-4o` and the take-home doesn't justify the cost. **Measured downside:**
+when given a 28-candidate batched rerank prompt the model returns ~9 valid
+items, silently dropping the rest (see EVALUATION.md F5 / R37). The system
+prompt explicitly demands "one entry per candidate id" but `gpt-4o-mini`
+ignores it on long lists.
+
+**Why we kept the choice for the take-home:** the workaround (cap
+`RETRIEVAL_TOP_K=15`) is a single env var change, and we wanted measured
+numbers from the default config. **What we'd ship:** a `min_length`
+validator on `RerankResults.items` that triggers a `tenacity` retry, plus
+a two-batch fan-out at higher candidate counts. For latency-sensitive
+production, swap to `gpt-4o` (faster *and* compliant on long outputs).
+
+### D13 — Default approach is `embed+rerank`, but BM25 wins at this scale
+
+The plan made `embed+rerank` the default when `OPENAI_API_KEY` is set,
+expecting dense retrieval to beat lexical. The measured run inverted that:
+BM25 R@30 = 0.60, Embed R@30 = 0.24 (see EVALUATION.md F2 / R38).
+Hypotheses include "N=300 is too small for embeddings to win" and
+"resume embeddings dilute role-relevant signal with noise."
+
+**Why we kept the default:** behaviour is honest about what the plan
+shipped, and a one-line `default_approach()` change is a reviewer-visible
+follow-up rather than a hidden tweak. Users wanting the better-performing
+path can set `APPROACH_OVERRIDE=bm25+rerank`.
 
 ## Trust boundary
 
