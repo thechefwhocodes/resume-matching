@@ -30,9 +30,17 @@ export interface Resume {
   format: "txt"; // Always "txt" since all resumes are pre-extracted text files
 }
 
+// Approach selector. Optional; the service picks based on OPENAI_API_KEY when omitted.
+export type ApproachName =
+  | "bm25"
+  | "bm25+rerank"
+  | "embed"
+  | "embed+rerank";
+
 // Match request from frontend to API
 export interface MatchRequest {
   resume: Resume;
+  approach?: ApproachName;
 }
 
 // Individual job match result
@@ -44,8 +52,27 @@ export interface JobMatch {
   explanation: string;
   matching_skills: string[];
   experience_alignment: string;
+
+  // Optional metadata surfaced by the candidate service.
+  // The UI (JobCard.tsx) renders these directly when present.
+  location?: string;
+  salary_range?: string; // formatted string, e.g. "$120K - $180K"
+  job_category?: string;
+  responsibilities?: string;
+  requirements?: string;
+  retrieval_score?: number;
+  rerank_score?: number;
+  filter_flags?: Record<string, any>;
+
   // Candidates can extend this with additional fields
   [key: string]: any;
+}
+
+// Per-request token accounting from the candidate service
+export interface TokenUsage {
+  prompt: number;
+  completion: number;
+  embedding: number;
 }
 
 // Match response from candidate's service
@@ -55,6 +82,12 @@ export interface MatchResponse {
     retrieval_method: string;
     reranking_method: string;
     processing_time_ms: number;
+    retrieval_count?: number;
+    filtered_count?: number;
+    returned_count?: number;
+    approach?: ApproachName;
+    cost_usd?: number;
+    tokens?: TokenUsage;
     // Candidates can add more metadata fields
     [key: string]: any;
   };

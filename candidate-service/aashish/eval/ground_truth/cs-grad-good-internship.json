@@ -1,0 +1,11 @@
+{
+  "resume_file": "new-grads/cs-grad-good-internship.txt",
+  "expected_job_ids": [
+    "bf10edae-591e-4925-bbf2-129e4c544532",
+    "22e29f15-72b6-45c1-8c19-ab8723b9708d",
+    "7b8a88ee-5d40-4dbb-b7cc-e69c6d34128f",
+    "37ee0933-a3b6-498a-bb46-5f81f2b4bcfe",
+    "88fede35-b676-435e-83cc-01dd3e357668"
+  ],
+  "notes": "Top picks are all yoe_min=0, 0-2 Years bucket, Bay Area, and ML/AI-heavy — matching Emily's Stanford AI Lab PyTorch/transformers research and her TensorFlow RecipeML project. Databricks ML Engineer wins on greenFlags (3.7+ GPA from reputable institution, self-directed learner — she's 3.8 from Stanford); Scale AI and Lumina are in Palo Alto/Mountain View with idealCompanies overlap (Hugging Face, Scale AI, DeepMind) matching her NeurIPS-track research profile. Prism (Full-Stack) rounds out the list as a strong fallback leveraging her CollabCode + Airbnb full-stack experience with a 'high learning velocity and autonomy' greenFlag that fits a new grad."
+}

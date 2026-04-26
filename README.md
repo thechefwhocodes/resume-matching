@@ -2,7 +2,7 @@
 
 Build an AI-powered system that matches resumes to relevant jobs from 300 job descriptions.
 
-KEY FOCUS: Applied AI Engineering skikks 
+KEY FOCUS: Applied AI Engineering skills
 
 **Time: 3 hours** | **Focus:** System design + future improvements, not perfection
 
@@ -10,7 +10,7 @@ KEY FOCUS: Applied AI Engineering skikks
 
 ## The Challenge
 
-You have **300 job descriptions** and need to match them to an uploaded resume. resumes. Design a system that efficiently retrieves and ranks jobs. We expect this to take ~3–4 hours. Please don’t spend more than that — we value tradeoff decisions over completeness
+You have **300 job descriptions** and need to match them to uploaded resumes. Design a system that efficiently retrieves and ranks jobs. We expect this to take ~3–4 hours. Please don't spend more than that — we value tradeoff decisions over completeness.
 
 **What we're evaluating:**
 
@@ -28,7 +28,7 @@ You have **300 job descriptions** and need to match them to an uploaded resume. 
 
 ```bash
 git clone <repo-url>
-cd onsite-AI-eng
+cd resume-matching
 npm install
 ```
 
@@ -135,7 +135,7 @@ Your complete implementation in `candidate-service/your-name/`:
 - Dependencies file (`requirements.txt`, `package.json`, etc.)
 - Any config files needed
 
-### 3. Video Walkthrough (Required)
+### 2. Video Walkthrough (Required)
 
 5-10 min Loom showing:
 
@@ -172,16 +172,29 @@ Your complete implementation in `candidate-service/your-name/`:
 ### Project Structure
 
 ```
-onsite-AI-eng/
+resume-matching/
 ├── data/
 │   ├── jobs.json                  # 300 jobs
-│   └── sample-resumes/            # 20 test resumes
+│   └── sample-resumes/            # 20 test resumes (across 4 buckets)
 ├── src/                           # Next.js frontend (for testing)
-├── candidate-service/             # Your implementation goes here
-│   ├── main.py               # Your service
-│   ├── README.md             # Setup & architecture
-│   └── EVALUATION.md         # Reflection
-└── README.md                     # This file
+│   ├── app/api/match/route.ts     # Proxy: forwards POST to candidate service
+│   ├── components/                # JobCard, ResumeUploader, etc.
+│   └── types/index.ts             # Shared TS contract
+├── candidate-service/
+│   ├── README.md
+│   └── <your-name>/               # Your implementation lives here
+│       ├── README.md              # Setup, demo path, design overview
+│       ├── EVALUATION.md          # Metrics, risks, what you'd do next
+│       ├── ARCHITECTURE.md        # Diagrams + decision log
+│       ├── Makefile               # install / demo / run / eval / test
+│       ├── docker-compose.yml is at repo root and shared
+│       ├── requirements.txt or package.json
+│       ├── src/                   # Your service code
+│       ├── tests/                 # Your unit + integration tests
+│       └── eval/                  # Ground truth + eval suites
+├── docker-compose.yml             # Optional: postgres + pgvector for the candidate
+├── .env.example
+└── README.md                      # This file
 ```
 
 ### Architecture Overview

@@ -42,4 +42,19 @@ next-env.d.ts
 /candidate-service/implementation/
 /candidate-service/*/
 !candidate-service/README.md
-!candidate-service/api-contract.md
+!candidate-service/aashish/
+
+# Python (candidate-service/aashish)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+candidate-service/aashish/eval/results/*.md
+candidate-service/aashish/eval/.cache/
