@@ -1,5 +1,11 @@
 {
   "resume_file": "experienced/senior-backend-engineer.txt",
-  "expected_job_ids": [],
-  "notes": "PLACEHOLDER. Generate via Claude Opus 4 using the prompt in eval/ground_truth/README.md, then replace the empty array with the top-5 picks. Validator will warn (not fail) until this is filled."
+  "expected_job_ids": [
+    "8a9f38b9-6211-48e4-8ca6-024cfb99f4c5",
+    "3b9b71be-104d-4a45-8c14-18f851c8bf4c",
+    "df86b5fb-8610-4132-ab13-479277ed60eb",
+    "21ead18d-5246-4f03-86c2-faedcda57ef8",
+    "7ad46a80-2ac7-46c2-84ba-8c84f760f5b6"
+  ],
+  "notes": "All five are active Backend roles within the candidate's 8-YOE band (yoe_min 5–8, none exceeding the +2 cap). Contrario Senior Backend (8a9f38b9) is the strongest fit — Senior title with yoe_min=8 exactly matching, and required stack (Go, Kubernetes, PostgreSQL, AWS, microservices) mirrors his Snowflake/Expedia experience verbatim. Drift Staff (3b9b71be) ranks 2nd on location (only top-tier remote option, beating forced relocation) with peer-tier idealCompanies (Airbnb, Plaid). Contrario Staff (df86b5fb), Atlas Staff (21ead18d), and Vector Senior (7ad46a80) round out the list — each hits the Python/Go/K8s/AWS skill core and has greenFlags he literally satisfies (on-call SLA uptime, cost reduction, leading technical projects, mentorship)."
 }

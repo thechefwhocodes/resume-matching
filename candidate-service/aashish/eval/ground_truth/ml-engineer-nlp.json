@@ -1,5 +1,11 @@
 {
   "resume_file": "experienced/ml-engineer-nlp.txt",
-  "expected_job_ids": [],
-  "notes": "PLACEHOLDER. Generate via Claude Opus 4 using the prompt in eval/ground_truth/README.md, then replace the empty array with the top-5 picks. Validator will warn (not fail) until this is filled."
+  "expected_job_ids": [
+    "62e66f92-4d5f-4ce9-8d0e-47952e95630e",
+    "82fb72b1-6af6-4d2c-b7a1-8558e639d872",
+    "a9a027cd-3c31-4552-ba98-07dd2b69ce3f",
+    "c4ed9482-bb4a-4d20-9db3-b60f543cca76",
+    "b8159ffd-f55f-4219-bee7-2f33956e6209"
+  ],
+  "notes": "All five are active ML/AI roles with H1B sponsorship (candidate is IIT Delhi grad, likely needs it) and yoe_min within +2 of her 4 YOE. Quantum (#1) is the cleanest match: NYC, yoe_min=3, explicit LLMs+PyTorch+transformers requirement, and idealCompanies includes Anthropic/OpenAI/DeepMind — directly aligned with her LLaMA fine-tuning and RAG work at Bloomberg. Beacon (#2) is yoe_min=4 exact, NYC, and explicitly lists Bloomberg in idealCompanies. Drift Research Engineer (#3) and Vertex Research Engineer (#4) align with her EMNLP publication and NYU research background, both require transformers/PyTorch and list Bloomberg or Anthropic as peers. Scale AI (#5) is a tier-A AI lab listing Bloomberg as an ideal peer; ranked last only because Bay Area location loses to the NYC roles on the location tiebreaker."
 }

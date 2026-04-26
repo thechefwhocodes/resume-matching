@@ -172,7 +172,10 @@ def _bm25_pipeline(
             ),
         ))
 
-    return matches, len(matches), len(matches)
+    # No filter stage in BM25, so filtered_count == retrieval_count.
+    # returned_count (set by run_pipeline) is len(matches), which may be
+    # smaller if BM25 returned a job_id whose row was purged after index build.
+    return matches, len(pairs), len(pairs)
 
 
 # ---------------------------------------------------------------------------

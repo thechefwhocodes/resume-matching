@@ -1,5 +1,11 @@
 {
   "resume_file": "remote/india-backend-engineer.txt",
-  "expected_job_ids": [],
-  "notes": "PLACEHOLDER. Generate via Claude Opus 4 using the prompt in eval/ground_truth/README.md, then replace the empty array with the top-5 picks. Validator will warn (not fail) until this is filled."
+  "expected_job_ids": [
+    "289df7ad-bd9e-46cf-97c0-47e5d3eb7f31",
+    "e06b7f08-1355-4068-8abc-d5e7450fd9a7",
+    "34ac3d9e-a853-4f10-bfe8-2d6cdfbe73f2",
+    "7ad46a80-2ac7-46c2-84ba-8c84f760f5b6",
+    "f3bdefac-5a08-4ef1-bfed-11210d128c66"
+  ],
+  "notes": "All five are active Backend roles offering H-1B sponsorship with yoe_min within 2 of the candidate's 5 YOE. Stripe leads because his current Flipkart work on a $50M/day payments platform is a direct domain match, and the PostgreSQL/AWS/Redis/K8s/Python stack overlaps almost completely. Atlas (Java+Python+K8s, lists Amazon as ideal) and Ember (Java+AWS+microservices, rewards technical blogging—he has 10K+ Medium views) align tightly on stack and signals; Vector's Senior role in Brooklyn matches his exact title and yoe_min=5, and Vector's Staff role rewards on-call/high-uptime SLA experience that mirrors his Amazon Prime Video on-call rotation and 99.95% uptime record at Flipkart."
 }

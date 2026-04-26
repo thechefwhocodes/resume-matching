@@ -68,9 +68,24 @@ class MatchMetadata(BaseModel):
     reranking_method: str
     processing_time_ms: int
 
-    retrieval_count: int = 0
-    filtered_count: int = 0
-    returned_count: int = 0
+    retrieval_count: int = Field(
+        default=0,
+        description="Candidates produced by the retriever before any filter stage.",
+    )
+    filtered_count: int = Field(
+        default=0,
+        description=(
+            "Candidates that survived the filter stage. For pipelines without "
+            "explicit filters (bm25, embed) this equals retrieval_count."
+        ),
+    )
+    returned_count: int = Field(
+        default=0,
+        description=(
+            "Candidates included in the final response (post-rerank min_score, "
+            "post-top_k, post-orphan-skip)."
+        ),
+    )
     approach: ApproachName
     cost_usd: float = 0.0
     tokens: TokenUsage = Field(default_factory=TokenUsage)

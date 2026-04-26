@@ -1,5 +1,11 @@
 {
   "resume_file": "less-impressive/job-hopper-with-gaps.txt",
-  "expected_job_ids": [],
-  "notes": "PLACEHOLDER. Generate via Claude Opus 4 using the prompt in eval/ground_truth/README.md, then replace the empty array with the top-5 picks. Validator will warn (not fail) until this is filled. Note: this resume may legitimately have <5 strong matches; document and adjust expected length if so."
+  "expected_job_ids": [
+    "6233bcd6-3b08-4b67-a806-9ae3d6ee3e34",
+    "4e7e8580-c161-47f1-8978-2ca079047807",
+    "5f9425d7-0d07-4357-a2f1-1c3325fa4f26",
+    "13300bad-c22f-42cb-9069-0e64863ecabd",
+    "9ef98146-3cb3-4b82-96d0-b5d1ebc0cec2"
+  ],
+  "notes": "Brandon's actual stack is React + JavaScript + Node.js/Express + HTML/CSS at a junior level (~2 effective YOE across fragmented roles, bootcamp-trained, no CS degree). Weave Full-Stack tops the list as a direct React+Node.js match at 0+ YOE, fully remote, with explicit 'builder mindset / willingness to learn' green flags that fit a bootcamp grad. Drift and Flux UI are the cleanest pure-Frontend matches (React+JS+CSS, 0+ YOE) — their location penalty is offset by exact category and stack alignment, which the rules rank above location. Titan and Flux Senior round out the list as the only remaining Remote Frontend roles within the YOE+2 buffer (Flux Senior at 3+ is a stretch but candidate's React experience justifies it)."
 }
