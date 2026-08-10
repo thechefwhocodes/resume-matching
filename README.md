@@ -1,4 +1,4 @@
-# AI Engineer Take-Home: Resume Matching System
+Resume Matching System
 
 Build an AI-powered system that matches resumes to relevant jobs from 300 job descriptions.
 
